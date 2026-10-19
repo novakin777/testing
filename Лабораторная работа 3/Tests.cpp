@@ -1,6 +1,7 @@
 #include "Graph.h"
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -26,6 +27,19 @@ namespace
     bool equal(const std::vector<int>& actual, const std::vector<int>& expected)
     {
         return actual == expected;
+    }
+
+    bool isValidNumber(const std::string& text, long long& number)
+    {
+        std::istringstream input(text);
+        std::string extra;
+
+        if (!(input >> number) || (input >> extra))
+        {
+            return false;
+        }
+
+        return number >= -1000000000 && number <= 1000000000;
     }
 }
 
@@ -81,6 +95,16 @@ void runTests()
     check(!exampleGraph.addEdge(0, 10) && !exampleGraph.addEdge(9, 1) &&
               exampleGraph.getNeighbors(1).size() == 2,
           "Обработка некорректных индексов");
+
+    long long number = 0;
+    check(isValidNumber("25", number) && number == 25,
+          "Корректное число из ReadNumber");
+    check(!isValidNumber("abc", number),
+          "Неверный формат из ReadNumber");
+    check(!isValidNumber("1000000001", number),
+          "Число больше верхней границы из ReadNumber");
+    check(!isValidNumber("-1000000001", number),
+          "Число меньше нижней границы из ReadNumber");
 
     std::cout << "\nВсего тестов: " << passed + failed << "\n";
     std::cout << "Пройдено: " << passed << "\n";
