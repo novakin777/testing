@@ -4,3 +4,12 @@ obj/
 *.user
 *.suo
 *.obj
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.iobj
+*.ipdb
+Debug/
+Release/
+x64/
